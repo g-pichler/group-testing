@@ -3,7 +3,7 @@
 
 import matplotlib.pyplot as plt
 from pooltesting import PoolTest
-
+import numpy as np
 
 class PlotHelper():
     pt: PoolTest
@@ -28,7 +28,7 @@ class PlotHelper():
         self.pt.set(**self.params)
 
         D, I = self.pt.distortion_rate()
-        SG2 = self.pt.SG2()
+        SG2 = self.pt.SG2(u2=range(40))
         BT = self.pt.binary_splitting()
         indiv = self.pt.individual_testing()
         #SG1 = self.pt.SG1()
@@ -46,7 +46,7 @@ class PlotHelper():
         plt.legend(handles=h)
         plt.xlabel('Tests per individual')
         plt.ylabel('Cost per individual')
-        plt.xlim((0.0, min(self.pt.entropy_bound(), 1) * 1.1))
+        plt.xlim((0.0, np.max(SG2[1]) * 1.1))
 
         #for x, y, lbl in zip(SG1[1], SG1[0], SG1[2]):
         #    plt.annotate(str(lbl), (x, y))
